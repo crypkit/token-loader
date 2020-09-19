@@ -1,0 +1,38 @@
+{
+  "name": "token-loader",
+  "version": "1.0.0",
+  "description": "A contract fetching data about ERC20 contracts",
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nomiclabs/buidler": "^1.4.7",
+    "@nomiclabs/buidler-ethers": "^2.0.0",
+    "@nomiclabs/buidler-etherscan": "^2.1.0",
+    "@nomiclabs/buidler-waffle": "^2.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
+    "chai": "^4.2.0",
+    "eslint": "^7.9.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "ethereum-waffle": "^3.1.0",
+    "ethers": "^5.0.14",
+    "husky": "^4.3.0",
+    "prettier": "^2.1.2",
+    "prettier-plugin-solidity": "^1.0.0-alpha.57",
+    "solhint": "^3.2.0",
+    "solhint-plugin-prettier": "0.0.5",
+    "truffle-hdwallet-provider": "^1.0.17",
+    "ts-node": "^9.0.0",
+    "typechain": "^2.0.0",
+    "typechain-target-ethers": "^1.0.4",
+    "typescript": "^4.0.2"
+  }
+}

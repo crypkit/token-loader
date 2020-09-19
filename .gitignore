@@ -1,0 +1,9 @@
+node_modules
+/.idea/
+/.env
+
+#Buidler files
+cache
+artifacts
+/typechain/
+/lastDeployment.json
