@@ -60,15 +60,6 @@ contract TokenLoader {
             }
 
             (success, returnData) = address(target).staticcall(
-                abi.encodeWithSelector(target.symbol.selector)
-            );
-            if (success) {
-                tokenInfo[i].symbol = abi.decode(returnData, (string));
-            } else {
-                tokenInfo[i].symbol = '';
-            }
-
-            (success, returnData) = address(target).staticcall(
                 abi.encodeWithSelector(target.decimals.selector)
             );
             if (success) {
@@ -93,7 +84,10 @@ contract TokenLoader {
     function getTokenType(Target target) private view returns (TokenType) {
         // 0x80ac58cd - ERC721 ID
         (bool success, bytes memory returnData) = address(target).staticcall(
-            abi.encodeWithSelector(target.supportsInterface.selector, 0x80ac58cd)
+            abi.encodeWithSelector(
+                target.supportsInterface.selector,
+                0x80ac58cd
+            )
         );
         if (success && abi.decode(returnData, (bool))) {
             return TokenType.ERC721;
