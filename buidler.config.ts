@@ -4,6 +4,8 @@ import { INFURA_PROJECT_ID, PRIVATE_KEY, ETHERSCAN_API_KEY } from './config';
 
 usePlugin('@nomiclabs/buidler-ethers');
 usePlugin('@nomiclabs/buidler-etherscan');
+usePlugin('@nomiclabs/buidler-waffle');
+usePlugin('buidler-typechain');
 
 const config: BuidlerConfig = {
     solc: {
