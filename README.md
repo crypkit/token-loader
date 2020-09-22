@@ -5,7 +5,7 @@
 
 2. Generate typechain (buidler-typechain doesn't yet support ethers-v5):
 
-    typechain --target ethers-v5 --outDir ./typechain ./artifacts/*.json
+    typechain --target ethers-v5 --outDir ./typechain "./artifacts/*.json"
 
 3. Run tests:
 
