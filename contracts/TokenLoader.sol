@@ -51,7 +51,7 @@ contract TokenLoader {
             }
 
             (success, returnData) = address(target).staticcall(
-                abi.encodeWithSelector(target.name.selector)
+                abi.encodeWithSelector(target.symbol.selector)
             );
             if (success) {
                 tokenInfo[i].symbol = abi.decode(returnData, (string));

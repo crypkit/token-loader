@@ -1,31 +1,25 @@
-import { expect, use } from 'chai';
-import { TokenLoader } from '../typechain/TokenLoader';
-import { AllUsedErc721Methods } from '../typechain/AllUsedErc721Methods';
-import { solidity, deployContract, MockProvider } from 'ethereum-waffle';
-import TokenLoaderArtifact from '../artifacts/TokenLoader.json';
-import AllUsedERC721MethodsArtifact from '../artifacts/AllUsedERC721Methods.json';
+import {expect, use} from 'chai';
+import {TokenLoader} from '../typechain/TokenLoader';
+import {AllUsedErc721Methods} from '../typechain/AllUsedErc721Methods';
+import {solidity} from 'ethereum-waffle';
+import {ethers} from "@nomiclabs/buidler";
 
 use(solidity);
 
 describe('TokenLoader', () => {
-    const [wallet, walletTo] = new MockProvider().getWallets();
     let tokenLoader: TokenLoader;
 
-    beforeEach(async () => {
-        tokenLoader = (await deployContract(
-            wallet,
-            TokenLoaderArtifact,
-        )) as TokenLoader;
-    });
+    it('Check returned data for ERC721', async () => {
+        const TokenLoaderFactory = await ethers.getContractFactory('TokenLoader');
+        tokenLoader = await TokenLoaderFactory.deploy() as TokenLoader;
 
-    it('check ERC721 returned data', async () => {
-        let allUsedErc721Methods = (await deployContract(
-            wallet,
-            AllUsedERC721MethodsArtifact,
-        )) as AllUsedErc721Methods;
+        const AllUsedErc721MethodsFactory = await ethers.getContractFactory('AllUsedERC721Methods');
+        const allUsedErc721Methods: AllUsedErc721Methods = await AllUsedErc721MethodsFactory.deploy() as AllUsedErc721Methods;
 
-        expect(
-            await tokenLoader.loadTokens([allUsedErc721Methods.address]),
-        ).to.equal(['apagds']);
+        const response = await tokenLoader.loadTokens([allUsedErc721Methods.address])
+        const responseArray = [response[0].tokenType, response[0].name, response[0].symbol, response[0].decimals, response[0].totalSupply.toNumber()]
+
+        // For arrays we have to use the eql method, equal does not work
+        expect(responseArray).to.eql([1, 'AllUsedERC721Methods', 'ALLERC721', 0, 1000000000]);
     });
 });
