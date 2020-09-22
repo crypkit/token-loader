@@ -10,14 +10,9 @@ async function main() {
     console.log(`Tx hash: ${tokenLoader.deployTransaction.hash}`);
 
     // Save the contract address to a file
-    fs.writeFile(
-        'lastDeployment.json',
-        JSON.stringify({ tokenLoaderAddress: tokenLoader.address }),
-        'utf8',
-        () => {
-            console.log('Contract address saved to lastDeployment.json');
-        },
-    );
+    fs.writeFile('lastDeployment.json', JSON.stringify({ tokenLoaderAddress: tokenLoader.address }), 'utf8', () => {
+        console.log('Contract address saved to lastDeployment.json');
+    });
 
     // The contract is NOT deployed yet; we must wait until it is mined
     await tokenLoader.deployed();
