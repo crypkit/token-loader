@@ -20,10 +20,8 @@ abstract contract Target {
 }
 
 contract TokenLoader {
-    enum TokenType { ERC20, ERC721 }
-
     struct TokenInfo {
-        TokenType tokenType;
+        bool probablyIsERC721; // some non-fungibles don't follow ERC165 and can be misclassified
         string name; // mandatory in ERC20, voluntary in ERC721 (ERC721Metadata interface)
         string symbol; // mandatory in ERC20, voluntary in ERC721 (ERC721Metadata interface)
         uint8 decimals; // mandatory in ERC20
@@ -40,7 +38,7 @@ contract TokenLoader {
         for (uint256 i = 0; i < tokens.length; i++) {
             Target target = Target(tokens[i]);
 
-            tokenInfo[i].tokenType = getTokenType(target);
+            tokenInfo[i].probablyIsERC721 = probablyIsERC721(target);
 
             (bool success, bytes memory returnData) = address(target)
                 .staticcall(abi.encodeWithSelector(target.name.selector));
@@ -81,7 +79,7 @@ contract TokenLoader {
         return tokenInfo;
     }
 
-    function getTokenType(Target target) private view returns (TokenType) {
+    function probablyIsERC721(Target target) private view returns (bool) {
         // 0x80ac58cd - ERC721 ID
         (bool success, bytes memory returnData) = address(target).staticcall(
             abi.encodeWithSelector(
@@ -89,9 +87,6 @@ contract TokenLoader {
                 0x80ac58cd
             )
         );
-        if (success && abi.decode(returnData, (bool))) {
-            return TokenType.ERC721;
-        }
-        return TokenType.ERC20;
+        return success && abi.decode(returnData, (bool));
     }
 }

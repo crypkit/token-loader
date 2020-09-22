@@ -11,7 +11,7 @@ import {ethers} from "@nomiclabs/buidler";
 use(solidity);
 
 function respToArr(resp: any): Array<any> {
-    return [resp.tokenType, resp.name, resp.symbol, resp.decimals, resp.totalSupply.toNumber()]
+    return [resp.probablyIsERC721, resp.name, resp.symbol, resp.decimals, resp.totalSupply.toNumber()]
 }
 
 describe('TokenLoader', () => {
@@ -29,7 +29,7 @@ describe('TokenLoader', () => {
         const response = await tokenLoader.loadTokens([allUsedErc20Methods.address])
 
         // For arrays we have to use the eql method, equal does not work
-        expect(respToArr(response[0])).to.eql([0, 'AllUsedERC20Methods', 'ALLERC20', 18, 1000000000]);
+        expect(respToArr(response[0])).to.eql([false, 'AllUsedERC20Methods', 'ALLERC20', 18, 1000000000]);
     });
 
     it('Check returned data for ERC721', async () => {
@@ -39,7 +39,7 @@ describe('TokenLoader', () => {
         const response = await tokenLoader.loadTokens([allUsedErc721Methods.address])
 
         // For arrays we have to use the eql method, equal does not work
-        expect(respToArr(response[0])).to.eql([1, 'AllUsedERC721Methods', 'ALLERC721', 0, 1000000000]);
+        expect(respToArr(response[0])).to.eql([true, 'AllUsedERC721Methods', 'ALLERC721', 0, 1000000000]);
     });
 
     it('Check returned data for incomplete ERC20', async () => {
@@ -49,7 +49,7 @@ describe('TokenLoader', () => {
         const response = await tokenLoader.loadTokens([incompleteERC20.address])
 
         // For arrays we have to use the eql method, equal does not work
-        expect(respToArr(response[0])).to.eql([0, '', 'INCERC20', 0, 1000000000]);
+        expect(respToArr(response[0])).to.eql([false, '', 'INCERC20', 0, 1000000000]);
     });
 
     it('Check returned data for incomplete ERC721', async () => {
@@ -59,7 +59,7 @@ describe('TokenLoader', () => {
         const response = await tokenLoader.loadTokens([incompleteERC721.address])
 
         // For arrays we have to use the eql method, equal does not work
-        expect(respToArr(response[0])).to.eql([1, 'IncompleteERC721', '', 0, 0]);
+        expect(respToArr(response[0])).to.eql([true, 'IncompleteERC721', '', 0, 0]);
     });
 
     it('Check returned data for non-ERC721 contract supporting ERC165', async () => {
@@ -69,7 +69,7 @@ describe('TokenLoader', () => {
         const response = await tokenLoader.loadTokens([otherErc165.address])
 
         // For arrays we have to use the eql method, equal does not work
-        expect(respToArr(response[0])).to.eql([0, '', '', 0, 0]);
+        expect(respToArr(response[0])).to.eql([false, '', '', 0, 0]);
     });
 
     it('Check for correct response length', async () => {
@@ -91,8 +91,8 @@ describe('TokenLoader', () => {
         const response = await tokenLoader.loadTokens([incompleteERC20.address, incompleteERC721.address, incompleteERC20.address])
 
         expect(response.length).to.equal(3)
-        expect(respToArr(response[0])).to.eql([0, '', 'INCERC20', 0, 1000000000]);
-        expect(respToArr(response[1])).to.eql([1, 'IncompleteERC721', '', 0, 0]);
-        expect(respToArr(response[2])).to.eql([0, '', 'INCERC20', 0, 1000000000]);
+        expect(respToArr(response[0])).to.eql([false, '', 'INCERC20', 0, 1000000000]);
+        expect(respToArr(response[1])).to.eql([true, 'IncompleteERC721', '', 0, 0]);
+        expect(respToArr(response[2])).to.eql([false, '', 'INCERC20', 0, 1000000000]);
     });
 });
