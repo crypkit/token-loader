@@ -1,8 +1,8 @@
 pragma solidity ^0.7.1;
 
-contract AllERC20Methods {
+contract AllUsedERC20Methods {
     function name() public pure returns (string memory) {
-        return 'AllERC20Methods';
+        return 'AllUsedERC20Methods';
     }
 
     function symbol() public pure returns (string memory) {
