@@ -21,7 +21,7 @@ abstract contract Target {
 
 contract TokenLoader {
     struct TokenInfo {
-        bool probablyIsERC721; // some non-fungibles don't follow ERC165 and can be misclassified
+        bool definitelyIsERC721; // can be resolved only when the token implements ERC165
         string name; // mandatory in ERC20, voluntary in ERC721 (ERC721Metadata interface)
         string symbol; // mandatory in ERC20, voluntary in ERC721 (ERC721Metadata interface)
         uint8 decimals; // mandatory in ERC20
@@ -38,7 +38,7 @@ contract TokenLoader {
         for (uint256 i = 0; i < tokens.length; i++) {
             Target target = Target(tokens[i]);
 
-            tokenInfo[i].probablyIsERC721 = probablyIsERC721(target);
+            tokenInfo[i].definitelyIsERC721 = definitelyIsERC721(target);
 
             (bool success, bytes memory returnData) = address(target)
                 .staticcall(abi.encodeWithSelector(target.name.selector));
@@ -79,7 +79,7 @@ contract TokenLoader {
         return tokenInfo;
     }
 
-    function probablyIsERC721(Target target) private view returns (bool) {
+    function definitelyIsERC721(Target target) private view returns (bool) {
         // 0x80ac58cd - ERC721 ID
         (bool success, bytes memory returnData) = address(target).staticcall(
             abi.encodeWithSelector(

@@ -11,7 +11,7 @@ import { ethers } from '@nomiclabs/buidler';
 use(solidity);
 
 function respToArr(resp: any): Array<any> {
-    return [resp.probablyIsERC721, resp.name, resp.symbol, resp.decimals, resp.totalSupply.toNumber()];
+    return [resp.definitelyIsERC721, resp.name, resp.symbol, resp.decimals, resp.totalSupply.toNumber()];
 }
 
 describe('TokenLoader', () => {
