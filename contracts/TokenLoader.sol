@@ -1,4 +1,4 @@
-pragma solidity ^0.7.1;
+pragma solidity ^0.7.3;
 pragma experimental ABIEncoderV2;
 
 // target contract interface - selection of used ERC20 and ERC721 methods
@@ -36,6 +36,9 @@ contract TokenLoader {
         tokenInfo = new TokenInfo[](tokens.length);
 
         for (uint256 i = 0; i < tokens.length; i++) {
+            if (!isContract(tokens[i])) {
+                continue;
+            }
             Target target = Target(tokens[i]);
 
             tokenInfo[i].definitelyIsERC721 = definitelyIsERC721(target);
@@ -77,6 +80,14 @@ contract TokenLoader {
         }
 
         return tokenInfo;
+    }
+
+    function isContract(address _addr) private view returns (bool) {
+        uint32 size;
+        assembly {
+            size := extcodesize(_addr)
+        }
+        return (size > 0);
     }
 
     function definitelyIsERC721(Target target) private view returns (bool) {

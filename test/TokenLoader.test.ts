@@ -97,4 +97,11 @@ describe('TokenLoader', () => {
         expect(respToArr(response[1])).to.eql([true, 'IncompleteERC721', '', 0, 0]);
         expect(respToArr(response[2])).to.eql([false, '', 'INCERC20', 0, 1000000000]);
     });
+
+    it('Check handling of non-contract addresses', async () => {
+        const response = await tokenLoader.loadTokens(["0x050554F710c6fAFDBDB390FF653f9FAF25761Ad4"]);
+
+        // For arrays we have to use the eql method, equal does not work
+        expect(respToArr(response[0])).to.eql([false, '', '', 0, 0]);
+    });
 });
