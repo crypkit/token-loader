@@ -7,3 +7,4 @@ cache
 artifacts
 /typechain/
 /lastDeployment.json
+/lastDeploymentUni.json
