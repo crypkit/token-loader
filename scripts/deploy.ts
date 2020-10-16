@@ -1,10 +1,10 @@
 import { ethers } from '@nomiclabs/buidler';
-import { TokenLoader } from '../typechain/TokenLoader';
+import { TokenLoader } from '../typechain';
 import * as fs from 'fs';
 
 async function main() {
     const TokenLoaderFactory = await ethers.getContractFactory('TokenLoader');
-    const tokenLoader: TokenLoader = (await TokenLoaderFactory.deploy()) as TokenLoader;
+    const tokenLoader: TokenLoader = (await TokenLoaderFactory.deploy()) as unknown as TokenLoader;
 
     console.log(`Contract address: ${tokenLoader.address}`);
     console.log(`Tx hash: ${tokenLoader.deployTransaction.hash}`);

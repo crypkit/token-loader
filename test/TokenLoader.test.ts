@@ -1,12 +1,14 @@
-import { expect, use } from 'chai';
-import { TokenLoader } from '../typechain/TokenLoader';
-import { AllUsedErc20Methods } from '../typechain/AllUsedErc20Methods';
-import { AllUsedErc721Methods } from '../typechain/AllUsedErc721Methods';
-import { IncompleteErc20 } from '../typechain/IncompleteErc20';
-import { IncompleteErc721 } from '../typechain/IncompleteErc721';
-import { OtherErc165 } from '../typechain/OtherErc165';
-import { solidity } from 'ethereum-waffle';
-import { ethers } from '@nomiclabs/buidler';
+import {expect, use} from 'chai';
+import {
+    TokenLoader,
+    AllUsedErc20Methods,
+    AllUsedErc721Methods,
+    IncompleteErc20,
+    IncompleteErc721,
+    OtherErc165
+} from '../typechain';
+import {solidity} from 'ethereum-waffle';
+import {ethers} from '@nomiclabs/buidler';
 
 use(solidity);
 
@@ -19,12 +21,12 @@ describe('TokenLoader', () => {
 
     beforeEach(async () => {
         const TokenLoaderFactory = await ethers.getContractFactory('TokenLoader');
-        tokenLoader = (await TokenLoaderFactory.deploy()) as TokenLoader;
+        tokenLoader = (await TokenLoaderFactory.deploy()) as unknown as TokenLoader;
     });
 
     it('Check returned data for ERC20', async () => {
         const AllUsedErc20MethodsFactory = await ethers.getContractFactory('AllUsedERC20Methods');
-        const allUsedErc20Methods: AllUsedErc20Methods = (await AllUsedErc20MethodsFactory.deploy()) as AllUsedErc20Methods;
+        const allUsedErc20Methods: AllUsedErc20Methods = (await AllUsedErc20MethodsFactory.deploy()) as unknown as AllUsedErc20Methods;
 
         const response = await tokenLoader.loadTokens([allUsedErc20Methods.address]);
 
@@ -34,7 +36,7 @@ describe('TokenLoader', () => {
 
     it('Check returned data for ERC721', async () => {
         const AllUsedErc721MethodsFactory = await ethers.getContractFactory('AllUsedERC721Methods');
-        const allUsedErc721Methods: AllUsedErc721Methods = (await AllUsedErc721MethodsFactory.deploy()) as AllUsedErc721Methods;
+        const allUsedErc721Methods: AllUsedErc721Methods = (await AllUsedErc721MethodsFactory.deploy()) as unknown as AllUsedErc721Methods;
 
         const response = await tokenLoader.loadTokens([allUsedErc721Methods.address]);
 
@@ -44,7 +46,7 @@ describe('TokenLoader', () => {
 
     it('Check returned data for incomplete ERC20', async () => {
         const IncompleteERC20Factory = await ethers.getContractFactory('IncompleteERC20');
-        const incompleteERC20: IncompleteErc20 = (await IncompleteERC20Factory.deploy()) as IncompleteErc20;
+        const incompleteERC20: IncompleteErc20 = (await IncompleteERC20Factory.deploy()) as unknown as IncompleteErc20;
 
         const response = await tokenLoader.loadTokens([incompleteERC20.address]);
 
@@ -54,7 +56,7 @@ describe('TokenLoader', () => {
 
     it('Check returned data for incomplete ERC721', async () => {
         const IncompleteERC721Factory = await ethers.getContractFactory('IncompleteERC721');
-        const incompleteERC721: IncompleteErc721 = (await IncompleteERC721Factory.deploy()) as IncompleteErc721;
+        const incompleteERC721: IncompleteErc721 = (await IncompleteERC721Factory.deploy()) as unknown as IncompleteErc721;
 
         const response = await tokenLoader.loadTokens([incompleteERC721.address]);
 
@@ -64,7 +66,7 @@ describe('TokenLoader', () => {
 
     it('Check returned data for non-ERC721 contract supporting ERC165', async () => {
         const OtherErc165Factory = await ethers.getContractFactory('OtherERC165');
-        const otherErc165: OtherErc165 = (await OtherErc165Factory.deploy()) as OtherErc165;
+        const otherErc165: OtherErc165 = (await OtherErc165Factory.deploy()) as unknown as OtherErc165;
 
         const response = await tokenLoader.loadTokens([otherErc165.address]);
 
@@ -74,7 +76,7 @@ describe('TokenLoader', () => {
 
     it('Check for correct response length', async () => {
         const OtherErc165Factory = await ethers.getContractFactory('OtherERC165');
-        const otherErc165: OtherErc165 = (await OtherErc165Factory.deploy()) as OtherErc165;
+        const otherErc165: OtherErc165 = (await OtherErc165Factory.deploy()) as unknown as OtherErc165;
 
         const response = await tokenLoader.loadTokens([otherErc165.address]);
 
@@ -83,10 +85,10 @@ describe('TokenLoader', () => {
 
     it('Check loading multiple contracts at once', async () => {
         const IncompleteERC20Factory = await ethers.getContractFactory('IncompleteERC20');
-        const incompleteERC20: IncompleteErc20 = (await IncompleteERC20Factory.deploy()) as IncompleteErc20;
+        const incompleteERC20: IncompleteErc20 = (await IncompleteERC20Factory.deploy()) as unknown as IncompleteErc20;
 
         const IncompleteERC721Factory = await ethers.getContractFactory('IncompleteERC721');
-        const incompleteERC721: IncompleteErc721 = (await IncompleteERC721Factory.deploy()) as IncompleteErc721;
+        const incompleteERC721: IncompleteErc721 = (await IncompleteERC721Factory.deploy()) as unknown as IncompleteErc721;
 
         const response = await tokenLoader.loadTokens([incompleteERC20.address, incompleteERC721.address, incompleteERC20.address]);
 
