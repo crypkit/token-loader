@@ -1,4 +1,6 @@
-pragma solidity ^0.7.1;
+// SPDX-License-Identifier: ISC
+
+pragma solidity ^0.7.3;
 
 contract AllUsedERC721Methods {
     function name() public pure returns (string memory) {
