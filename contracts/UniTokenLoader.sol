@@ -37,9 +37,8 @@ contract UniTokenLoader {
 
         (bool success, bytes memory returnData) = token.staticcall(abi.encodeWithSelector(uniToken.symbol.selector));
 
-        string memory expectedSymbol = "UNI-V2";
-
-        if (success && keccak256(returnData) == keccak256(bytes(expectedSymbol))) {
+        // keccak256(bytes("UNI-V2")) = 0x0c49a525f6758cfb27d0ada1467d2a2e99733995423d47ae30ae4ba2ba563255
+        if (success && returnData.length != 0 && keccak256(abi.decode(returnData, (bytes))) == 0x0c49a525f6758cfb27d0ada1467d2a2e99733995423d47ae30ae4ba2ba563255) {
             Target token0 = Target(uniToken.token0());
             Target token1 = Target(uniToken.token1());
 
