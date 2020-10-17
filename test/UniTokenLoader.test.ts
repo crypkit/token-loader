@@ -16,6 +16,7 @@ function respToArr(resp: any): Array<any> {
 
 describe('TokenLoader', () => {
     let uniTokenLoader: UniTokenLoader;
+    const madeUpAddress = "0x050554F710c6fAFDBDB390FF653f9FAF25761Ad4";
 
     beforeEach(async () => {
         const UniTokenLoaderFactory = await ethers.getContractFactory('UniTokenLoader');
@@ -31,18 +32,39 @@ describe('TokenLoader', () => {
         const uniToken: UniToken = (await UniTokenFactory.deploy(token0.address, token1.address)) as unknown as UniToken;
 
 
-        const response = await uniTokenLoader.loadTokens(uniToken.address);
+        const response = await uniTokenLoader.loadTokens([uniToken.address]);
 
         // For arrays we have to use the eql method, equal does not work
         expect(respToArr(response[0])).to.eql(['AllUsedERC20Methods', 'ALLERC20', 18, 1000000000]);
     });
 
     it('Check handling of non-contract addresses', async () => {
-        const response = await uniTokenLoader.loadTokens("0x050554F710c6fAFDBDB390FF653f9FAF25761Ad4");
+        const response = await uniTokenLoader.loadTokens([madeUpAddress]);
 
         // For arrays we have to use the eql method, equal does not work
         expect(respToArr(response[0])).to.eql(['', '', 0, 0]);
         expect(respToArr(response[1])).to.eql(['', '', 0, 0]);
         expect(response.length).to.equal(2);
+    });
+
+    it('Check returned data for a combination of valid Uni-V2 token, made up address and non-Uni ERC20', async () => {
+        const AllUsedErc20MethodsFactory = await ethers.getContractFactory('AllUsedERC20Methods');
+        const token0: AllUsedErc20Methods = (await AllUsedErc20MethodsFactory.deploy()) as unknown as AllUsedErc20Methods;
+        const token1: AllUsedErc20Methods = (await AllUsedErc20MethodsFactory.deploy()) as unknown as AllUsedErc20Methods;
+
+        const UniTokenFactory = await ethers.getContractFactory('UniToken');
+        const uniToken: UniToken = (await UniTokenFactory.deploy(token0.address, token1.address)) as unknown as UniToken;
+
+
+        const response = await uniTokenLoader.loadTokens([uniToken.address, madeUpAddress, token0.address]);
+
+        // For arrays we have to use the eql method, equal does not work
+        expect(respToArr(response[0])).to.eql(['AllUsedERC20Methods', 'ALLERC20', 18, 1000000000]);
+        expect(respToArr(response[1])).to.eql(['AllUsedERC20Methods', 'ALLERC20', 18, 1000000000]);
+        expect(respToArr(response[2])).to.eql(['', '', 0, 0]);
+        expect(respToArr(response[3])).to.eql(['', '', 0, 0]);
+        expect(respToArr(response[4])).to.eql(['', '', 0, 0]);
+        expect(respToArr(response[5])).to.eql(['', '', 0, 0]);
+        expect(response.length).to.equal(6);
     });
 });

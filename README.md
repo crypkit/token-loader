@@ -37,8 +37,8 @@ The returned value is an array of structs containing the following properties:
     >NETWORK: mainnet, ropsten,... (has to be defined in buidler.config.ts)
                                                                                                                                                             
  # uni-token-loader
- A solidity smart contract which determines whether the token is a Uniswap v2 liquidity token or not.
- In case it is, it returns information about the ERC20 tokens belonging to the pair.
+ A solidity smart contract which determines whether a list of tokens are a Uniswap v2 liquidity tokens or not.
+ In case the token is, it returns information about the ERC20 tokens belonging to the pair on the corresponding position in the output ([2*i] and [2*i + 1].
  The returned value is an array of structs containing the following properties:
  
  - ***string name***: name of the token, when not present defaults to an empty string
@@ -46,7 +46,6 @@ The returned value is an array of structs containing the following properties:
  - ***uint8 decimals***: number of decimals in ERC20, when not present is set to 0 (always the case for ERC721)
  - ***uint256 totalSupply***: the total token supply, when not present defaults to 0
  
- The array is always of length 2.
  In case the token is not a Uniswap v2 token, the struct values are set to their defaults and the return value is as follows:
  
  ```
