@@ -35,3 +35,34 @@ The returned value is an array of structs containing the following properties:
     >ADDRESS: the address of the deployed contract
     
     >NETWORK: mainnet, ropsten,... (has to be defined in buidler.config.ts)
+                                                                                                                                                            
+ # uni-token-loader
+ A solidity smart contract which determines whether the token is a Uniswap v2 liquidity token or not.
+ In case it is, it returns information about the ERC20 tokens belonging to the pair.
+ The returned value is an array of structs containing the following properties:
+ 
+ - ***string name***: name of the token, when not present defaults to an empty string
+ - ***string symbol***: symbol of the token, when not present defaults to an empty string
+ - ***uint8 decimals***: number of decimals in ERC20, when not present is set to 0 (always the case for ERC721)
+ - ***uint256 totalSupply***: the total token supply, when not present defaults to 0
+ 
+ The array is always of length 2.
+ In case the token is not a Uniswap v2 token, the struct values are set to their defaults and the return value is as follows:
+ 
+ ```
+ [["", "", 0, 0], ["", "", 0, 0]]
+ ```
+ 
+ ## Deployment
+
+ 1. Deploy:
+     ```bash
+         npx buidler run scripts/deploy-uni.ts --network NETWORK
+     ```
+ 2. Verify on Etherscan:
+     ```bash
+          npx buidler verify ADDRESS --network NETWORK
+     ```
+     >ADDRESS: the address of the deployed contract
+     
+     >NETWORK: mainnet, ropsten,... (has to be defined in buidler.config.ts)
