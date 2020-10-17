@@ -23,6 +23,7 @@ abstract contract Target {
 
 contract TokenLoader {
     struct TokenInfo {
+        address addr; // address of the token contract
         bool definitelyIsERC721; // can be resolved only when the token implements ERC165
         string name; // mandatory in ERC20, voluntary in ERC721 (ERC721Metadata interface)
         string symbol; // mandatory in ERC20, voluntary in ERC721 (ERC721Metadata interface)
@@ -42,6 +43,8 @@ contract TokenLoader {
                 continue;
             }
             Target target = Target(tokens[i]);
+
+            tokenInfo[i].addr = tokens[i];
 
             tokenInfo[i].definitelyIsERC721 = definitelyIsERC721(target);
 

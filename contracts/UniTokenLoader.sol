@@ -25,6 +25,7 @@ abstract contract Target {
 contract UniTokenLoader {
 
     struct TokenInfo {
+        address addr;
         string name;
         string symbol;
         uint8 decimals;
@@ -40,11 +41,13 @@ contract UniTokenLoader {
 
             // keccak256(bytes("UNI-V2")) = 0x0c49a525f6758cfb27d0ada1467d2a2e99733995423d47ae30ae4ba2ba563255
             if (success && returnData.length != 0 && keccak256(abi.decode(returnData, (bytes))) == 0x0c49a525f6758cfb27d0ada1467d2a2e99733995423d47ae30ae4ba2ba563255) {
-                Target token0 = Target(uniToken.token0());
-                Target token1 = Target(uniToken.token1());
+                address token0Address = uniToken.token0();
+                address token1Address = uniToken.token1();
+                Target token0 = Target(token0Address);
+                Target token1 = Target(token1Address);
 
-                tokenInfo[2 * i] = TokenInfo(token0.name(), token0.symbol(), token0.decimals(), token0.totalSupply());
-                tokenInfo[2 * i + 1] = TokenInfo(token1.name(), token1.symbol(), token1.decimals(), token1.totalSupply());
+                tokenInfo[2 * i] = TokenInfo(token0Address, token0.name(), token0.symbol(), token0.decimals(), token0.totalSupply());
+                tokenInfo[2 * i + 1] = TokenInfo(token1Address, token1.name(), token1.symbol(), token1.decimals(), token1.totalSupply());
             }
         }
 
