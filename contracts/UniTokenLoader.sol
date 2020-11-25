@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: ISC
 
-pragma solidity ^0.7.3;
+pragma solidity ^0.7.5;
 pragma experimental ABIEncoderV2;
 
 abstract contract UniTarget {

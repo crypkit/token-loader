@@ -1,10 +1,10 @@
-import { ethers } from '@nomiclabs/buidler';
-import { UniTokenLoader } from '../typechain';
+import { ethers } from 'hardhat';
 import * as fs from 'fs';
+import { UniTokenLoader } from '../typechain/UniTokenLoader';
 
 async function main() {
     const UniTokenLoaderFactory = await ethers.getContractFactory('UniTokenLoader');
-    const uniTokenLoader: UniTokenLoader = (await UniTokenLoaderFactory.deploy()) as unknown as UniTokenLoader;
+    const uniTokenLoader: UniTokenLoader = (await UniTokenLoaderFactory.deploy()) as UniTokenLoader;
 
     console.log(`Contract address: ${uniTokenLoader.address}`);
     console.log(`Tx hash: ${uniTokenLoader.deployTransaction.hash}`);

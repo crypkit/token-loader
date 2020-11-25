@@ -1,4 +1,4 @@
-const INFURA_PROJECT_ID: string = 'e1fcdf9db95a4681b681e54551eb8004';
+const INFURA_PROJECT_ID: string = '433b91d6e6a542c6bc61c96c5c3dea5b';
 // private key for address 0x63A15fdAD87b93261e79a74C07851F900F781Af3
 const PRIVATE_KEY: string = '0xF8D46A5469433C4369BA77749B760F46208066F92EB9D9DCC31F26D4355DE157';
 // API key necessary for etherscan verification

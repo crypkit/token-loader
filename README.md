@@ -27,15 +27,15 @@ The returned value is an array of structs containing the following properties:
     ```
 4. Deploy:
     ```bash
-        npx buidler run scripts/deploy.ts --network NETWORK
+        npx hardhat run scripts/deploy.ts --network NETWORK
     ```
 5. Verify on Etherscan:
     ```bash
-         npx buidler verify ADDRESS --network NETWORK
+         npx hardhat verify ADDRESS --network NETWORK
     ```
     >ADDRESS: the address of the deployed contract
     
-    >NETWORK: mainnet, ropsten,... (has to be defined in buidler.config.ts)
+    >NETWORK: mainnet, ropsten,... (has to be defined in hardhat.config.ts)
                                                                                                                                                             
  # uni-token-loader
  A solidity smart contract which determines whether a list of tokens are a Uniswap v2 liquidity tokens or not.
@@ -58,12 +58,12 @@ The returned value is an array of structs containing the following properties:
 
  1. Deploy:
      ```bash
-         npx buidler run scripts/deploy-uni.ts --network NETWORK
+         npx hardhat run scripts/deploy-uni.ts --network NETWORK
      ```
  2. Verify on Etherscan:
      ```bash
-          npx buidler verify ADDRESS --network NETWORK
+          npx hardhat verify ADDRESS --network NETWORK
      ```
      >ADDRESS: the address of the deployed contract
      
-     >NETWORK: mainnet, ropsten,... (has to be defined in buidler.config.ts)
+     >NETWORK: mainnet, ropsten,... (has to be defined in hardhat.config.ts)
