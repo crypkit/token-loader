@@ -22,6 +22,10 @@ const config: HardhatUserConfig = {
             url: `https://ropsten.infura.io/v3/${INFURA_PROJECT_ID}`,
             accounts: [PRIVATE_KEY],
         },
+        mainnet: {
+            url: `https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}`,
+            accounts: [PRIVATE_KEY],
+        },
     },
     etherscan: {
         apiKey: ETHERSCAN_API_KEY,

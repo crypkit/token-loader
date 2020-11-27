@@ -11,6 +11,7 @@ The returned value is an array of structs containing the following properties:
 - ***uint8 decimals***: number of decimals in ERC20, when not present is set to 0 (always the case for ERC721)
 - ***uint256 totalSupply***: the total token supply, when not present defaults to 0
 
+TokenLoader is deployed on mainnet at [0x497Ccb13988c3255F52422B5080caa7379cF6850](https://etherscan.io/address/0x497ccb13988c3255f52422b5080caa7379cf6850).
 
 ## Installation and deployment
 1. Install the dependencies:
